@@ -1,0 +1,14 @@
+#mouse-box {
+    width: 1000px;
+    height: 400px;
+    background: pink;
+}
+
+.mouse-square {
+    width: 20px;
+    height: 20px;
+    background: black;
+    position: fixed;
+    top: 100px; /*  y */
+    left: 200px; /* x */
+}

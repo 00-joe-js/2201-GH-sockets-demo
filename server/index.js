@@ -21,12 +21,20 @@ socketServer.on("connection", (oneClient) => {
   console.log(`Socket connection established with a client given an ID of ${oneClient.id}`);
 
   oneClient.on("disconnect", () => {
-    console.log(`Socket connection with id ${oneClient.id} has DISCONNECTED`)
+    oneClient.broadcast.emit("imGone", oneClient.id);
   });
 
   setInterval(() => {
     const time = (new Date()).toLocaleString();
     oneClient.emit('time-change', time);
   }, 1000);
+
+  oneClient.on("whereMyMouseIs", (obj) => {
+    oneClient.broadcast.emit("anotherMouseMove", {
+      id: oneClient.id,
+      x: obj.x,
+      y: obj.y
+    });
+  });
 
 });
