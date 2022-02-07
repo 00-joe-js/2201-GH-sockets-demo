@@ -10,6 +10,8 @@ const server = app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`)
 })
 
+// -------
+
 const socketio = require("socket.io");
 
 const socketServer = socketio(server);
@@ -17,5 +19,14 @@ const socketServer = socketio(server);
 socketServer.on("connection", (oneClient) => {
 
   console.log(`Socket connection established with a client given an ID of ${oneClient.id}`);
+
+  oneClient.on("disconnect", () => {
+    console.log(`Socket connection with id ${oneClient.id} has DISCONNECTED`)
+  });
+
+  setInterval(() => {
+    const time = (new Date()).toLocaleString();
+    oneClient.emit('time-change', time);
+  }, 1000);
 
 });
